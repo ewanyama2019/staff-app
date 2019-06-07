@@ -40,11 +40,11 @@ public class App {
 
         // ------Page routing (referring to handle bars ------- //
 
-//        //show Main landing page form
-//        get("/", (request, response) -> {
-//            return new ModelAndView(new HashMap(), "index.hbs");
-//        }, new HandlebarsTemplateEngine());
-//
+        //show Main landing page form
+        get("/", (request, response) -> {
+            return new ModelAndView(new HashMap(), "index.hbs");
+        }, new HandlebarsTemplateEngine());
+
 ////------------------------------------------------------------------//
 //        //show new Department form
 //        get("/departments", (request, response) -> {
