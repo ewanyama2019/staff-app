@@ -1,3 +1,6 @@
+import com.google.gson.Gson;
+import dao.Sql2oDepartmentDao;
+import models.DB;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.HashMap;
@@ -10,6 +13,9 @@ import java.util.Map;
 public class App {
 
     public static void main(String[] args) {
+
+
+
 
 //        ProcessBuilder process = new ProcessBuilder();
 //        Integer port;
@@ -26,50 +32,62 @@ public class App {
 //        port(port);
 
 
+        staticFileLocation("/public");
+
+        Sql2oDepartmentDao departmentDao = new Sql2oDepartmentDao(DB.sql2o);
+        Gson gson = new Gson();
+
+
         // ------Page routing (referring to handle bars ------- //
 
-        //show Main landing page form
-        get("/", (request, response) -> {
-            return new ModelAndView(new HashMap(), "index.hbs");
-        }, new HandlebarsTemplateEngine());
+//        //show Main landing page form
+//        get("/", (request, response) -> {
+//            return new ModelAndView(new HashMap(), "index.hbs");
+//        }, new HandlebarsTemplateEngine());
+//
+////------------------------------------------------------------------//
+//        //show new Department form
+//        get("/departments", (request, response) -> {
+//            Map<String, Object> model = new HashMap<>();
+////            List<Department> departments = departmentDao.listAllDepartments(); //refresh list of links for navbar
+////            model.put("departments", departments);
+//            return new ModelAndView(new HashMap(), "departments.hbs");
+//        }, new HandlebarsTemplateEngine());
 
-//------------------------------------------------------------------//
-        //show new Department form
-        get("/departments", (request, response) -> {
-            Map<String, Object> model = new HashMap<>();
-//            List<Department> departments = departmentDao.getAll(); //refresh list of links for navbar
-//            model.put("departments", departments);
-            return new ModelAndView(new HashMap(), "departments.hbs");
-        }, new HandlebarsTemplateEngine());
+        // --------API GET ------------------------//
+        get("/departments", "application/json", (request, response) -> {
+            response.type("application/json");
+            return gson.toJson(departmentDao.listAllDepartments());
+        });
 
-        //post: process new department form
-        post("/departments", (req, res) -> { //new
-            Map<String, Object> model = new HashMap<>();
-            String name = req.queryParams("name");
-//            Department newDepartment = new Department(name);
-//            departmentDao.add(newDepartment);
-            res.redirect("/");
-            return null;
-        }, new HandlebarsTemplateEngine());
-
-//---------------------------------------------------------------//
-
-        get("/users", (request, response) -> {
-            return new ModelAndView(new HashMap(), "users.hbs");
-        }, new HandlebarsTemplateEngine());
-
-        get("/news", (request, response) -> {
-            return new ModelAndView(new HashMap(), "news.hbs");
-        }, new HandlebarsTemplateEngine());
-
-        get("/faqs", (request, response) -> {
-            return new ModelAndView(new HashMap(), "faqs.hbs");
-        }, new HandlebarsTemplateEngine());
-
-
-        get("/success", (request, response) -> {
-            return new ModelAndView(new HashMap(), "success.hbs");
-        }, new HandlebarsTemplateEngine());
+//        //post: process new department form
+//        post("/departments", (req, res) -> { //new
+//            Map<String, Object> model = new HashMap<>();
+//            String name = req.queryParams("name");
+////            Department newDepartment = new Department(name);
+////            departmentDao.add(newDepartment);
+//            res.redirect("/");
+//            return null;
+//        }, new HandlebarsTemplateEngine());
+//
+////---------------------------------------------------------------//
+//
+//        get("/users", (request, response) -> {
+//            return new ModelAndView(new HashMap(), "users.hbs");
+//        }, new HandlebarsTemplateEngine());
+//
+//        get("/news", (request, response) -> {
+//            return new ModelAndView(new HashMap(), "news.hbs");
+//        }, new HandlebarsTemplateEngine());
+//
+//        get("/faqs", (request, response) -> {
+//            return new ModelAndView(new HashMap(), "faqs.hbs");
+//        }, new HandlebarsTemplateEngine());
+//
+//
+//        get("/success", (request, response) -> {
+//            return new ModelAndView(new HashMap(), "success.hbs");
+//        }, new HandlebarsTemplateEngine());
 
     }
 }

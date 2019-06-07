@@ -15,24 +15,32 @@ public class Department {
         this.name = name;
     }
 
-    // -------------- GETTERS ------------------------
     public String getName() {
         return name;
     }
 
-    //------------- SETTERS -------------------------
-    public void setName(){
+    public void setName(String name) {
         this.name = name;
     }
 
-    Override
-    public boolean equals(Object otherDepartment) {
-        if (!(otherDepartment instanceof Department)) {
-            return false;
-        } else {
-            Department newDepartment = (Department) otherDepartment;
-            return this.getName().equals(newDepartment.getName());
-        }
+    public int getId() {
+        return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object otherDepartment) {
+        if (this == otherDepartment) return true;
+        if (otherDepartment == null || getClass() != otherDepartment.getClass()) return false;
+        Department that = (Department) otherDepartment;
+        return name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }
