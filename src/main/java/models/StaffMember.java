@@ -69,6 +69,10 @@ public class StaffMember {
         this.departmentID = departmentID;
     }
 
+    public void setId(int id) { this.id = id; }
+
+
+
     // -----------Override Method --------------------------
 
     @Override
@@ -84,6 +88,8 @@ public class StaffMember {
     public int hashCode() {
         return Objects.hash(getUser_name(), getDepartmentID());
     }
+
+
 
 
 //    @Override
