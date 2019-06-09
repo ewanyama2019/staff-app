@@ -12,7 +12,7 @@ public class DepartmentTest {
 
     @Test
     public void department_InstantiatesCorrectly_true() {
-        Department testDepartment = new Department("Digital IT");
+        Department testDepartment = new Department("Digital IT", "Digital IT departmetn for Innovation");
         assertEquals(true, testDepartment instanceof Department);
     }
 

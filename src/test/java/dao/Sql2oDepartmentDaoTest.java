@@ -26,7 +26,7 @@ public class Sql2oDepartmentDaoTest {
 
     @Test
     public void addingDepartmentSetsId() throws Exception {
-        Department department = new Department("Digital IT");
+        Department department = new Department("Digital IT", "Digital IT departmetn for Innovation");
         int originalDepartmentId = department.getId();
         departmentDao.saveDepartment(department);
         assertNotEquals(originalDepartmentId, department.getId());

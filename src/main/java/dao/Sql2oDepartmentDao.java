@@ -20,9 +20,10 @@ public class Sql2oDepartmentDao implements DepartmentDao { //implementing our in
     @Override
     public void saveDepartment(Department department) {
         try(Connection con = DB.sql2o.open()) { //try to open a connection
-            String sql ="INSERT INTO departments (name) VALUES (:name)"; //raw sql
+            String sql ="INSERT INTO departments (name, description) VALUES (:name, :description)"; //raw sql
             int id = (int) con.createQuery(sql, true) //make a new variable
                     .addParameter("name", department.getName())
+                    .addParameter("description", department.getDescription())
                     .executeUpdate()
                     .getKey();  //int id is now the row number (row “key”) of db
             department.setId(id);
