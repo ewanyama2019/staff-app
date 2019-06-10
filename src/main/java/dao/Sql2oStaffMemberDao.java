@@ -19,10 +19,17 @@ public class Sql2oStaffMemberDao implements StaffMemberDao { //implementing our 
     @Override
     public void saveStaffMember(StaffMember staffMember) {
         try(Connection con = DB.sql2o.open()) { //try to open a connection
-            String sql ="INSERT INTO staff_members (user_name, department_id) VALUES (:user_name, :departmentID)"; //raw sql
+            String sql ="INSERT INTO staff_members (user_name, first_name, middle_name, sir_name, ek_number, department_id) VALUES (:user_name, :first_name, :middle_name, :sir_name, :ek_number, :department_id)"; //raw sql
+
+            // user_name, first_name, middle_name, sir_name, ek_number, department_id
+
             int id = (int) con.createQuery(sql, true) //make a new variable
                     .addParameter("user_name", staffMember.getUser_name())
-                    .addParameter("departmentID", staffMember.getDepartmentID())
+                    .addParameter("first_name", staffMember.getFirst_name())
+                    .addParameter("middle_name", staffMember.getMiddle_name())
+                    .addParameter("sir_name", staffMember.getSir_name())
+                    .addParameter("ek_number", staffMember.getEk_number())
+                    .addParameter("department_id", staffMember.getDepartmentID())
                     .executeUpdate()
                     .getKey();  //int id is now the row number (row “key”) of db
             staffMember.setId(id);
@@ -33,7 +40,7 @@ public class Sql2oStaffMemberDao implements StaffMemberDao { //implementing our 
 
     // --------------------FIND /LIST BY ID ------------------------//
     @Override
-    public StaffMember findStaffMember(int id) {
+    public StaffMember findStaffMemberById(int id) {
         try (Connection con = DB.sql2o.open()) {
             String sql = "SELECT * FROM staff_members WHERE id=:id";
             StaffMember staffMember = con.createQuery(sql)
@@ -49,6 +56,48 @@ public class Sql2oStaffMemberDao implements StaffMemberDao { //implementing our 
         String sql = "SELECT * FROM staff_members";
         try(Connection con = DB.sql2o.open()) {
             return con.createQuery(sql).executeAndFetch(StaffMember.class);  //fetch a list
+        }
+    }
+
+    @Override
+    public void updateStaffMember(int id, String newUser_name, String newFirst_name, String newMiddle_name, String newSir_name, int newEk_number, int newDepartment_id) {
+        String sql = "UPDATE staff_members SET (user_name, first_name, middle_name, sir_name, ek_number, department_id) = (:user_name, :first_name, :middle_name, :sir_name, :ek_number, :department_id) WHERE id=:id";   //raw sql
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sql)
+                    .addParameter("user_name", newUser_name)
+                    .addParameter("first_name", newFirst_name)
+                    .addParameter("middle_name", newMiddle_name)
+                    .addParameter("sir_name", newSir_name)
+                    .addParameter("ek_number", newEk_number)
+                    .addParameter("department_id", newDepartment_id)
+                    .addParameter("id", id)
+                    .executeUpdate();
+        } catch (Sql2oException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    @Override
+    public void deleteStaffMemberById(int id) {
+        String sql = "DELETE from staff_members WHERE id=:id";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sql)
+                    .addParameter("id", id)
+                    .executeUpdate();
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
+    }
+
+
+    @Override
+    public void deleteAllStaffMember() {
+        String sql = "DELETE from staff_members";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sql)
+                    .executeUpdate();
+        } catch (Sql2oException ex){
+            System.out.println(ex);
         }
     }
 

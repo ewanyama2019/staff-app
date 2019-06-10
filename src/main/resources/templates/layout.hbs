@@ -7,7 +7,37 @@
         <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
     </head>
     <body>
+
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active"><a href="/">Home</a></li>
+            <li role="presentation"><a href="/departments">Add a New Department</a></li>
+            <li role="presentation"><a href="/users">Add New Staff Member</a>
+            <li role="presentation"><a href="/general_news">Add General news</a></li>
+            <li role="presentation"><a href="/department_news">Add Departmental news</a></li>
+
+
+            <li role="presentation" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    Department <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    {{#if departments}}
+                        {{#each departments}}
+                            <li><a href="/departments{{id}}">{{name}}</a></li>
+                        {{/each}}
+                        <li><a href="/departments">Add a Department</a></li>
+
+                    {{else}}
+                        <li><a href="/departments">Add a Department</a></li>
+                    {{/if}}
+                </ul>
+            </li>
+        </ul>
+    </div>
 {{/block}}
+
+
 
 <!-- begin inner template-->
 <div class="container">
@@ -19,5 +49,7 @@
 {{#block "footer"}}
 
     </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </html>
 {{/block}}

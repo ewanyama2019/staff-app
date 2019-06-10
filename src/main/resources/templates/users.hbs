@@ -12,6 +12,28 @@
     <p><a href='/faqs' >FAQs.</a></p>
 
 
+    {{#if editStaffMember}}
+        <h3>Update Staff-Member Information </h3>
+        <form action="/users/{{editStaffMember.id}}" method="post">
+            <label for="user_name">Edit this Staff-Member's Username</label>
+            <input id="user_name" name="user_name" type="text" value="{{editStaffMember.user_name}}">
+
+    {{else}}
+            <h1>Add a new Staff-Member</h1>
+
+        <form action="/users" method="post">
+            <label for="user_name">StaffMember Username</label>
+            <input id="user_name" name="user_name" type="text">
+
+    {{/if}}
+        <button type="submit" class="btn btn-default">Update Details</button>
+    </form>
+
+    <hr>
+        <p>Username:</p>
+        <p>{{ staffMember.user_name }}</p>
+
+
 {{/partial}}
 
 {{> layout.hbs}}

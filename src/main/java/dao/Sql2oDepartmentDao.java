@@ -2,6 +2,7 @@ package dao;
 
 import models.DB;
 import models.Department;
+import models.StaffMember;
 import org.sql2o.*;
 import java.util.List;
 
@@ -52,4 +53,60 @@ public class Sql2oDepartmentDao implements DepartmentDao { //implementing our in
             return con.createQuery(sql).executeAndFetch(Department.class);  //fetch a list
         }
     }
+
+    @Override
+    public void updateDepartment(int id, String newName){
+        String sql = "UPDATE departments SET name = :name WHERE id=:id";
+        try(Connection con = sql2o.open()){
+            con.createQuery(sql)
+                    .addParameter("name", newName)
+                    .addParameter("id", id)
+                    .executeUpdate();
+        } catch (Sql2oException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    @Override
+    public void deleteDepartmentById(int id) {
+        String sql = "DELETE from departments WHERE id=:id"; //raw sql
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sql)
+                    .addParameter("id", id)
+                    .executeUpdate();
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
+    }
+
+    @Override
+    public void DeleteAllDepartment() {
+        String sql = "DELETE from departments"; //raw sql
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sql)
+                    .executeUpdate();
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
+    }
+
+    @Override
+    public List<StaffMember> listAllStaffMembersByDepartment(int department_id) {
+        try(Connection con = sql2o.open()){
+            return con.createQuery("SELECT * FROM staff_members WHERE department_id = :department_id")
+                    .addParameter("department_id", department_id)
+                    .executeAndFetch(StaffMember.class);
+        }
+    }
+
+//    @Override
+//    public List<DepartmentalNews> listAllNewsItemsByDepartment(int department_id) {
+//        try(Connection con = sql2o.open()){
+//            return con.createQuery("SELECT * FROM department_news WHERE department_id = :department_id")
+//                    .addParameter("department_id", department_id)
+//                    .executeAndFetch(StaffMember.class);
+//        }
+//    }
+
+
 }

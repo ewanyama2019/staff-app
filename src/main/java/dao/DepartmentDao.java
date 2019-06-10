@@ -1,29 +1,36 @@
 package dao;
 
 import models.Department;
-//import models.Users;
+import models.StaffMember;
+
 import java.util.List;
 
 
 public interface DepartmentDao {
-//
-//    //LIST ALL SITES
+
+    //LIST ALL DEPARTMENTS
     List<Department> listAllDepartments();
 
-    // CREATE :SAVE TO DATABASE
+    // CREATE :DEPARTMENTS TO DATABASE
     void saveDepartment(Department department);
-//
-//    // READ SITES BY ID
+
+    // READ DEPARTMENTS BY ID
     Department findDepartment(int id);
 
-//    // UPDATE
-//    void updateDepartment();
-//
-//    // DELETE SITE BY ID
-//    void deleteDepartmentById(int id);
-//
-//
-//    // DELETE ALL SITES
-//    void ClearAllDepartment();
+    // UPDATE DEPARTMENTS
+    void updateDepartment(int id, String newName);
+
+    // DELETE DEPARTMENTS BY ID
+    void deleteDepartmentById(int id);
+
+
+    // DELETE ALL DEPARTMENTS
+    void DeleteAllDepartment();
+
+    //LIST ALL STAFF MEMBERS  BY DEPARTMENTS
+    List<StaffMember> listAllStaffMembersByDepartment(int department_id);
+
+    //LIST ALL NEWS ITEMS BY DEPARTMENTS
+//    List<StaffMember> listAllNewsItemsByDepartment(int department_id);
 
 }
