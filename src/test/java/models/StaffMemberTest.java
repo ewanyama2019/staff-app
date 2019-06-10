@@ -5,10 +5,11 @@ import static org.junit.Assert.*;
 import org.sql2o.*;
 import java.util.Arrays;
 
+
 public class StaffMemberTest {
 
-//    @Rule
-//    public DatabaseRule databaseRule = new DatabaseRule();
+    @Rule
+    public DataBaseRule databaseRule = new DataBaseRule();
 
     @Test
     public void staffMember_instantiatesCorrectly_True() {

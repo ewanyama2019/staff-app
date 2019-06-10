@@ -7,8 +7,8 @@ import java.util.Arrays;
 
 public class DepartmentTest {
 
-//    @Rule
-//    public DatabaseRule database = new DatabaseRule();
+    @Rule
+    public DataBaseRule databaseRule = new DataBaseRule();
 
     @Test
     public void department_InstantiatesCorrectly_true() {
