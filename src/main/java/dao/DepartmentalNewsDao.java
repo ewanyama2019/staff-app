@@ -6,21 +6,21 @@ import java.util.List;
 
 public interface DepartmentalNewsDao {
 
-    //   LIST ALL NEWS HEADLINES
+    //   LIST ALL DEPARTMENTAL NEWS
     List<DepartmentalNews> listAllDepartmentalNews();
 
-    // CREATE :SAVE NEWS HEADLINES TO DATABASE
+    // CREATE :SAVE DEPARTMENTAL NEWS  TO DATABASE
     void saveDepartmentalNews(DepartmentalNews departmentalNews);
 
-    // READ NEWS HEADLINES BY ID
+    // READ DEPARTMENTAL NEWS BY ID
     DepartmentalNews findDepartmentalNewsById(int id);
 
-    // UPDATE NEWS HEADLINES
+    // UPDATE DEPARTMENTAL NEWS
     void updateDepartmentalNews(int id, String newNews_headlines, String newNews_details, int newDepartment_id);
 
-    // DELETE NEWS HEADLINES BY ID
+    // DELETE DEPARTMENTAL NEWS BY ID
     void deleteDepartmentalNewsById(int id);
 
-    // DELETE NEWS HEADLINES
+    // DELETE DEPARTMENTAL NEWS
     void deleteAllDepartmentalNews();
 }
