@@ -1,10 +1,6 @@
 import com.google.gson.Gson;
-import dao.Sql2oDepartmentDao;
-import dao.Sql2oDepartmentalNewsDao;
-import dao.Sql2oStaffMemberDao;
-import models.DB;
-import models.Department;
-import models.StaffMember;
+import dao.*;
+import models.*;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -43,6 +39,7 @@ public class App {
         Sql2oDepartmentDao departmentDao = new Sql2oDepartmentDao(DB.sql2o);
         Sql2oStaffMemberDao staffMemberDao = new Sql2oStaffMemberDao(DB.sql2o);
         Sql2oDepartmentalNewsDao departmentalNewsDao = new Sql2oDepartmentalNewsDao(DB.sql2o);
+        Sql2oGeneralNewsDao generalNewsDao = new Sql2oGeneralNewsDao(DB.sql2o);
         Gson gson = new Gson();
 
 
@@ -54,10 +51,11 @@ public class App {
         });
 
         // --------API POST DEPARTMENTS ---------------------//
-        post("/departments", "app/json", (request, response) -> {
+        post("/departments/new", "application/json", (request, response) -> {
             Department newDepartment = gson.fromJson(request.body(), Department.class);
             departmentDao.saveDepartment(newDepartment);
-            response.status(207);
+            response.status(201);
+            response.type("application/json");
             return gson.toJson(departmentDao.listAllDepartments());
         }) ;
 
@@ -68,11 +66,12 @@ public class App {
         });
 
         // --------API POST STAFF-MEMBERS OR USERS ---------------------//
-        post("/users", "app/json", (request, response) -> {
+        post("/users/new", "application/json", (request, response) -> {
             StaffMember newStaffMember = gson.fromJson(request.body(), StaffMember.class);
             staffMemberDao.saveStaffMember(newStaffMember);
-            response.status(207);
-            return gson.toJson(departmentDao.listAllDepartments());
+            response.status(201);
+            response.type("application/json");
+            return gson.toJson(newStaffMember);
         }) ;
 
         // --------API GET ALL DEPARTMENTAL NEWS  ------------------------//
@@ -80,6 +79,34 @@ public class App {
             response.type("application/json");
             return gson.toJson(departmentalNewsDao.listAllDepartmentalNews());
         });
+
+        // --------API POST DEPARTMENTAL NEWS  ------------------------//
+        post("/news/new", "application/json", (request, response) -> {
+            DepartmentalNews newDepartmentalNews = gson.fromJson(request.body(), DepartmentalNews.class);
+            departmentalNewsDao.saveDepartmentalNews(newDepartmentalNews);
+            response.status(201);
+            response.type("application.json");
+            return gson.toJson(newDepartmentalNews);
+        });
+
+        // --------API GET ALL GENERAL NEWS  ------------------------//
+        get("/", "application/json", (request, response) -> {
+            response.type("application/json");
+            return gson.toJson(generalNewsDao.listAllGeneralNews());
+        });
+
+        // -----------API POST GENERAL NEWS ----------------------//
+        post("/new", "application/json", (request, response) -> {
+            GeneralNews newGeneralNews = gson.fromJson(request.body(), GeneralNews.class);
+            generalNewsDao.saveGeneralNews(newGeneralNews);
+            response.status(201);
+            response.type("application.json");
+            return gson.toJson(newGeneralNews);
+        });
+
+
+
+
 
 
 

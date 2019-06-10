@@ -11,6 +11,16 @@
     <p><a href='/success' >Success</a></p>
     <p><a href='/faqs' >FAQs.</a></p>
 
+    <hr>
+    {{#if generalNews}}
+        {{#each generalNews }}
+            <p>Current News:</p>
+            <p>{{ news_details }} <a href="/general_news/{{id}}">read more...</a></p>
+        {{/each}}
+    {{else}}
+        <p>No News to display!</p>
+    {{/if}}
+
 
 {{/partial}}
 
