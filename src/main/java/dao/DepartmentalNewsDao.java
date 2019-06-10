@@ -3,9 +3,10 @@ package dao;
 import models.DepartmentalNews;
 import java.util.List;
 
+
 public interface DepartmentalNewsDao {
 
-    ///   LIST ALL NEWS HEADLINES
+    //   LIST ALL NEWS HEADLINES
     List<DepartmentalNews> listAllDepartmentalNews();
 
     // CREATE :SAVE NEWS HEADLINES TO DATABASE
@@ -15,7 +16,7 @@ public interface DepartmentalNewsDao {
     DepartmentalNews findDepartmentalNewsById(int id);
 
     // UPDATE NEWS HEADLINES
-    void updateDepartmentalNews(String news_headlines, String news_details, int department_id);
+    void updateDepartmentalNews(int id, String newNews_headlines, String newNews_details, int newDepartment_id);
 
     // DELETE NEWS HEADLINES BY ID
     void deleteDepartmentalNewsById(int id);

@@ -1,5 +1,6 @@
 import com.google.gson.Gson;
 import dao.Sql2oDepartmentDao;
+import dao.Sql2oDepartmentalNewsDao;
 import dao.Sql2oStaffMemberDao;
 import models.DB;
 import models.Department;
@@ -41,6 +42,7 @@ public class App {
 
         Sql2oDepartmentDao departmentDao = new Sql2oDepartmentDao(DB.sql2o);
         Sql2oStaffMemberDao staffMemberDao = new Sql2oStaffMemberDao(DB.sql2o);
+        Sql2oDepartmentalNewsDao departmentalNewsDao = new Sql2oDepartmentalNewsDao(DB.sql2o);
         Gson gson = new Gson();
 
 
@@ -64,6 +66,22 @@ public class App {
             response.type("application/json");
             return gson.toJson(staffMemberDao.listAllStaffMembers());
         });
+
+        // --------API POST STAFF-MEMBERS OR USERS ---------------------//
+        post("/users", "app/json", (request, response) -> {
+            StaffMember newStaffMember = gson.fromJson(request.body(), StaffMember.class);
+            staffMemberDao.saveStaffMember(newStaffMember);
+            response.status(207);
+            return gson.toJson(departmentDao.listAllDepartments());
+        }) ;
+
+        // --------API GET ALL DEPARTMENTAL NEWS  ------------------------//
+        get("/news", "application/json", (request, response) -> {
+            response.type("application/json");
+            return gson.toJson(departmentalNewsDao.listAllDepartmentalNews());
+        });
+
+
 
 
 
