@@ -89,13 +89,13 @@ public class App {
         });
 
         // --------API GET ALL GENERAL NEWS  ------------------------//
-        get("/", "application/json", (request, response) -> {
+        get("/generalnews", "application/json", (request, response) -> {
             response.type("application/json");
             return gson.toJson(generalNewsDao.listAllGeneralNews());
         });
 
         // -----------API POST GENERAL NEWS ----------------------//
-        post("/new", "application/json", (request, response) -> {
+        post("/generalnews", "application/json", (request, response) -> {
             GeneralNews newGeneralNews = gson.fromJson(request.body(), GeneralNews.class);
             generalNewsDao.saveGeneralNews(newGeneralNews);
             response.status(201);
